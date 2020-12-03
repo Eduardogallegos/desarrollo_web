@@ -86,6 +86,7 @@
 <script>
   import { required, digits, min, max, regex } from 'vee-validate/dist/rules'
   import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+  import axios from 'axios'
 
   setInteractionMode('eager')
 
@@ -139,11 +140,27 @@
         }
       },
       pay(){
+        let productsToBuy = []
         this.productNames.forEach(element => {
           if(this.$cookie.get(element) != null){
+            let productValue = JSON.parse(this.$cookie.get(element))
+            let prodToBuy = {nombre:productValue.name, cantidad:productValue.cantidad, stock:productValue.stock}
+            productsToBuy.push(prodToBuy)
             this.$cookie.delete(element)
           }
         });
+        console.log(productsToBuy)
+        axios.post('https://7bdqs9pwc4.execute-api.us-east-1.amazonaws.com/default/pagarA01745776', productsToBuy)
+        .then(response=>{
+          new Promise(resolve => setTimeout(resolve, 2000));
+          alert('Gracias por su compra')
+          this.$router.push({ path: 'productos' })
+          console.log(response)
+        })
+        .catch(error=>{
+          alert('Algo Salio mal en la compra')
+          console.log(error)
+        })   
       }
     },
     mounted: function(){

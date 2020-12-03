@@ -71,7 +71,7 @@
           <v-col md="2"></v-col>
           <v-col md="4">
             <v-btn @click="edit = false">Cancelar</v-btn>
-            <v-btn color="success">Cambiar</v-btn>
+            <v-btn @click="editingAPI" color="success">Cambiar</v-btn>
           </v-col>
         </v-card-actions>
       </v-card>
@@ -96,7 +96,8 @@ export default {
     newInput:'',
     rules: [
         value => !!value || 'Required.',
-      ],
+    ],
+    usermail:''
   }),
   methods:{
     editItem(key, value) {
@@ -122,6 +123,40 @@ export default {
       }).catch(error => {
         alert('No se pudo obtener informacion del usuario')
         console/location(error)
+      })
+    },
+    editingAPI(){
+      let info = {mail:this.usermail, value:this.newInput}
+      let keyStr = ''
+      switch (this.keyToEdit) {
+        case 'Nombre':
+          keyStr = 'nombre'
+          break;
+
+        case 'Apellido Paterno':
+          keyStr = 'apellidoP'
+          break;
+
+        case 'Apellido Materno':
+          keyStr = 'apellidoM'
+          break;
+
+        case 'Telefono':
+          keyStr = 'telefono'
+          break;
+      }
+      info['str'] = keyStr
+      let ctx = this
+      axios.post('https://7bdqs9pwc4.execute-api.us-east-1.amazonaws.com/default/updateinfo',info)
+      .then(response =>{
+        if(response.data.update == 'success'){
+          alert(`${ctx.keyToEdit} actualizado`)
+          location.reload();
+        }
+      })
+      .catch(error=>{
+        alert('Algo salió mal, intenta nuevamente')
+        console.log(error)
       })
     }
   },

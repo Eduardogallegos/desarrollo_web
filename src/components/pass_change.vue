@@ -55,6 +55,7 @@
 <script>
   import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
   import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+  import axios from 'axios'
 
   setInteractionMode('eager')
 
@@ -98,6 +99,19 @@
     methods: {
       submit () {
         this.$refs.observer.validate()
+        let info = {mail:this.email, str:'password', value:this.pwd}
+        let ctx = this
+        axios.post('https://7bdqs9pwc4.execute-api.us-east-1.amazonaws.com/default/updateinfo',info)
+        .then(response =>{
+          if(response.data.update == 'success'){
+            alert('Contraseña actualizada')
+            ctx.$router.push({ path: 'log-in' })
+          }
+        })
+        .catch(error=>{
+          alert('Algo salió mal, intenta nuevamente')
+          console.log(error)
+        })
       },
       clear () {
         this.name = ''

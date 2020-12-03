@@ -93,7 +93,7 @@
             <v-text-field
               v-model="pwd"
               :error-messages="errors"
-              label="Contraseña"
+              label="Contraseña (8 caracteres. Al menos: 1 mayúscula, 1 minúscula, 1 caracter especial y 1 número)"
               :type="value ? 'password' : 'text'"
               :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
               @click:append="() => (value = !value)"

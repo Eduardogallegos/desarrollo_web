@@ -86,6 +86,10 @@ export default {
         this.getTotal()
       },
       pagar(){
+        this.items.forEach(element => {
+          let product = JSON.stringify({name: element.name, description: element.description, imgURL: element.imgURL, stock: element.stock, price:element.price, cantidad:element.cantidad})
+          this.$cookie.set(element.name, product, 1)
+        });
         this.$cookie.set('total', this.total, 1)
         this.$router.push({path: 'pagar'})
       }
