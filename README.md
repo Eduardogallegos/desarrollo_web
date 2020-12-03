@@ -1,24 +1,14 @@
 # perritosh
+# Proyecto final desarrollo web
+## Eduardo Gallegos
+## A01745776
 
-## Project setup
-```
+## Para installar las dependencias
+```sh
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Correr el proyecto localmente
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
